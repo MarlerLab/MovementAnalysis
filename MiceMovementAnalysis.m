@@ -31,12 +31,12 @@ function MiceMovementAnalysis()
     T = table(mouseA_velocity, mouseB_velocity, 'VariableNames', header2);
     writetable(T, excelname, 'Sheet', 2);
     
+    %{
     for i = 1:12
         N = NumberOfFrames - i;
         analyzeOverNFrames(filename,i,N,mouseA_x_1,mouseA_y_1,mouseA_x_2,mouseA_y_2,mouseB_x_1,mouseB_y_1,mouseB_x_2,mouseB_y_2,mouseA_velocity,mouseB_velocity);
     end
     
-    %{
     mice_distance = getDistanceBetweenMice(NumberOfFrames,mouseA_x_1,mouseA_y_1,mouseB_x_1,mouseB_y_1);
     mice_angle = getAngleBetweenMice(NumberOfFrames,mouseA_x_1,mouseA_y_1,mouseA_x_2,mouseA_y_2,mouseB_x_1,mouseB_y_1,mouseB_x_2,mouseB_y_2);
     mouseA_velocity = getVelocity(NumberOfFrames,mouseA_x_1,mouseA_y_1);
