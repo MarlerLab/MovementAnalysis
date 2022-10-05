@@ -1,12 +1,8 @@
 function MiceMovementAnalysis() 
     % mice Movement Analysis
     % Unit: frame
-    fid = fopen('MovementObservation.csv');
-    csv_title = textscan(fid,'%s',1);
-    fclose(fid);
-    filename = string(cell2mat(extractBetween(cell2mat(csv_title{1}), 'scorer,',',')));
-    
-    DataFile = xlsread('MovementObservation.csv');
+    excelname = fileread("MovementObservationName.txt");
+    DataFile = readmatrix('MovementObservation.csv');
     NumberOfFrames = size(DataFile, 1);
     mouseA_x_1 = DataFile(1:NumberOfFrames,2);
     mouseA_y_1 = DataFile(1:NumberOfFrames,3);
@@ -20,7 +16,6 @@ function MiceMovementAnalysis()
     mice_distance = getDistanceBetweenMice(0,NumberOfFrames,mouseA_x_1,mouseA_y_1,mouseB_x_1,mouseB_y_1);
     mice_angle = getAngleBetweenMice(0,NumberOfFrames,mouseA_x_1,mouseA_y_1,mouseA_x_2,mouseA_y_2,mouseB_x_1,mouseB_y_1,mouseB_x_2,mouseB_y_2);
     
-    excelname = filename + '.xlsx';
     header1 = {'mouseA_x_1', 'mouseA_y_1', 'mouseA_x_2', 'mouseA_y_2', 'mouseB_x_1', 'mouseB_y_1', 'mouseB_x_2', 'mouseB_y_2', 'mice_distance', 'mice_angle'};
     T = table(mouseA_x_1, mouseA_y_1, mouseA_x_2, mouseA_y_2, mouseB_x_1, mouseB_y_1, mouseB_x_2, mouseB_y_2, mice_distance, mice_angle,'VariableNames', header1);
     writetable(T, excelname, 'Sheet', 1);
